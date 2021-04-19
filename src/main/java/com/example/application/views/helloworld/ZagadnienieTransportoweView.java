@@ -200,9 +200,9 @@ public class ZagadnienieTransportoweView extends HorizontalLayout {
             double totalCost = 0;
             double totalPrzychód = 0;
 
-            double zysk1 = 0;
-            double zysk2 = 0;
-            double zysk3 = 0;
+            //double zysk1 = 0;
+            //double zysk2 = 0;
+            //double zysk3 = 0;
 
             for(ZyskAndResult[] zArr : zysk){
                 for(ZyskAndResult z : zArr){
@@ -215,7 +215,7 @@ public class ZagadnienieTransportoweView extends HorizontalLayout {
                         totalCost += zysk[i][j].getAmountValue() * (dostawcy.get(i).getCenaZakupu() + transport[i][j]);
                         totalPrzychód += zysk[i][j].getAmountValue() * odbiorcy.get(j).getSprzedaż();
                     }
-                    if(i == 0){
+                   /* if(i == 0){
                         zysk1 += zysk[i][j].getAmountValue() * zysk[i][j].getZyskValue();
                     }
                     else if(i == 1){
@@ -223,14 +223,18 @@ public class ZagadnienieTransportoweView extends HorizontalLayout {
                     }else if(i == 2){
                         zysk3 += zysk[i][j].getAmountValue() * zysk[i][j].getZyskValue();
                     }
+
+                    */
                 }
             }
-            HorizontalLayout layout10 = new HorizontalLayout(new Text("Zysk pośrednika 1: " + zysk1));
+            /*HorizontalLayout layout10 = new HorizontalLayout(new Text("Zysk pośrednika 1: " + zysk1));
             result.add(layout10);
 
             HorizontalLayout layout11 = new HorizontalLayout(new Text("Zysk pośrednika 2: " + zysk2));
             result.add(layout11);
 
+
+             */
             HorizontalLayout layout12 = new HorizontalLayout(new Text("Zysk całkowity: " + total));
             result.add(layout12);
 
