@@ -29,6 +29,7 @@ public class Solver {
                     } else {
                         zysk[wiersz][kolumna] = new ZyskAndResult(false, 0);
                         zysk[wiersz][kolumna].setZyskValue(0.0);
+                        zysk[wiersz][kolumna].setFictional(true);
                     }
                 }
             }
