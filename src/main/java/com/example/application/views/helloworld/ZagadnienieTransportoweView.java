@@ -58,11 +58,11 @@ public class ZagadnienieTransportoweView extends HorizontalLayout {
         addClassName("hello-world-view");
         prod1P = new NumberField("Podaż 1");
         prod2P = new NumberField("Podaż 2");
-        prodFictionalP = new NumberField("Podaż fikcyjna");
+       // prodFictionalP = new NumberField("Podaż fikcyjna");
 
         odb1P = new NumberField("Popyt 1");
         odb2P = new NumberField("Popyt 2");
-        odbFictionalP = new NumberField("Popyt fikcyjny");
+        //odbFictionalP = new NumberField("Popyt fikcyjny");
 
         transport11 = new NumberField();   transport12 = new NumberField();   transport13 = new NumberField();
         transport21 = new NumberField();   transport22 = new NumberField();   transport23 = new NumberField();
@@ -70,12 +70,12 @@ public class ZagadnienieTransportoweView extends HorizontalLayout {
 
         Solve = new Button("Solve");
 
-        HorizontalLayout prodLayout = new HorizontalLayout(prod1P, prod2P, prodFictionalP);
+        HorizontalLayout prodLayout = new HorizontalLayout(prod1P, prod2P);//, prodFictionalP);
         prodLayout.setAlignItems(Alignment.CENTER);
         add(prodLayout);
-        setVerticalComponentAlignment(Alignment.END, prod1P, prodFictionalP);
+       // setVerticalComponentAlignment(Alignment.END, prod1P, prodFictionalP);
 
-        HorizontalLayout odbLayout = new HorizontalLayout(odb1P, odb2P, odbFictionalP);
+        HorizontalLayout odbLayout = new HorizontalLayout(odb1P, odb2P);//, odbFictionalP);
         odbLayout.setAlignItems(Alignment.CENTER);
         add(odbLayout);
 
@@ -84,28 +84,28 @@ public class ZagadnienieTransportoweView extends HorizontalLayout {
         transportDescriptionLayout.setAlignItems(Alignment.BASELINE);
         add(transportDescriptionLayout);
 
-        HorizontalLayout transportLayout1 = new HorizontalLayout(transport11, transport12, transport13);
-        HorizontalLayout transportLayout2 = new HorizontalLayout(transport21, transport22, transport23);
-        HorizontalLayout transportLayout3 = new HorizontalLayout(transport31, transport32, transport33);
+        HorizontalLayout transportLayout1 = new HorizontalLayout(transport11, transport12);//, transport13);
+        HorizontalLayout transportLayout2 = new HorizontalLayout(transport21, transport22);//, transport23);
+       // HorizontalLayout transportLayout3 = new HorizontalLayout(transport31, transport32);//, transport33);
 
         transportLayout1.setAlignItems(Alignment.CENTER);
         transportLayout2.setAlignItems(Alignment.CENTER);
-        transportLayout3.setAlignItems(Alignment.CENTER);
+       // transportLayout3.setAlignItems(Alignment.CENTER);
 
         add(transportLayout1);
         add(transportLayout2);
-        add(transportLayout3);
+       // add(transportLayout3);
 
         prod1Price = new NumberField("Cena zakupu 1");
         prod2Price = new NumberField("Cena zakupu 2");
-        prodFictionalPrice = new NumberField("Cena zakupu Fikcyjnego");;
-        HorizontalLayout prodPrices = new HorizontalLayout(prod1Price, prod2Price, prodFictionalPrice);
+        //prodFictionalPrice = new NumberField("Cena zakupu Fikcyjnego");;
+        HorizontalLayout prodPrices = new HorizontalLayout(prod1Price, prod2Price);//, prodFictionalPrice);
         add(prodPrices);
 
         odb1Price = new NumberField("Cena sprzedaży 1");
         odb2Price = new NumberField("Cena sprzedaży 2");
-        odbFictionalPrice = new NumberField("Cena sprzedaży fikcyjnej");
-        HorizontalLayout odbPrices = new HorizontalLayout(odb1Price, odb2Price, odbFictionalPrice);
+        //odbFictionalPrice = new NumberField("Cena sprzedaży fikcyjnej");
+        HorizontalLayout odbPrices = new HorizontalLayout(odb1Price, odb2Price);//, odbFictionalPrice);
         add(odbPrices);
 
         HorizontalLayout solveLayout = new HorizontalLayout(Solve);
@@ -122,11 +122,20 @@ public class ZagadnienieTransportoweView extends HorizontalLayout {
 
             dostawcy.add(new Dostawca(prod1Price.getValue(), prod1P.getValue().intValue()));
             dostawcy.add(new Dostawca(prod2Price.getValue(), prod2P.getValue().intValue()));
-            dostawcy.add(new Dostawca(prodFictionalPrice.getValue(), prodFictionalP.getValue().intValue()));
 
             odbiorcy.add(new Odbiorca(odb1Price.getValue(),odb1P.getValue().intValue()));
             odbiorcy.add(new Odbiorca(odb2Price.getValue(),odb2P.getValue().intValue()));
-            odbiorcy.add(new Odbiorca(odbFictionalPrice.getValue(), odbFictionalP.getValue().intValue()));
+
+            if(prod1P.getValue().intValue() + prod2P.getValue().intValue() != odb1P.getValue().intValue() + odb2P.getValue().intValue()){
+                dostawcy.add(new Dostawca(/*prodFictionalPrice.getValue()*/0, odb1P.getValue().intValue() + odb2P.getValue().intValue()));
+                odbiorcy.add(new Odbiorca(/*odbFictionalPrice.getValue()*/0, prod1P.getValue().intValue() + prod2P.getValue().intValue()));
+            }
+            else{
+                dostawcy.add(new Dostawca(/*prodFictionalPrice.getValue()*/0, 0));
+                odbiorcy.add(new Odbiorca(/*odbFictionalPrice.getValue()*/0, 0));
+            }
+
+
 
             ZyskAndResult[][] zysk = new ZyskAndResult[transport.length][transport[0].length];
             zysk = Solver.solve(dostawcy, odbiorcy, transport, zysk,true);
